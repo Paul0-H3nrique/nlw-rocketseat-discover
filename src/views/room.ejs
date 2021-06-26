@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+    <!-- Aula-1 senha = #together -->
+    <!-- Aula-2 senha = #unidade -->
+    <!-- Aula-3 senha = #embuscadeevolução -->
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" href="/images/Icon.svg">
+        <title>Rocket.Q - Perguntas e Respostas</title>
+        <!-- Styles -->
+        <link rel="stylesheet" href="/styles/global.css">
+        <link rel="stylesheet" href="/styles/room.css">
+        <link rel="stylesheet" href="/styles/room-empty.css">
+        <link rel="stylesheet" href="/styles/modal.css">
+        <!-- Fonts -->
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
+        <!-- Scripts -->
+        <script src="/scripts/main.js" defer type="module"></script>
+    </head>
+    <body>
+        <div id="room" class="content">
+            <header>
+                <a href="/">
+                    <img src="/images/logo.svg" alt="Rocket.Q Logo"/>
+                </a>
+                <div class="room-header-buttons">
+                    <div class="btn outlined" id="room-id" data-id="<%=roomid %>">
+                        #<%=roomid%>
+                        <img src="/images/copy.svg" alt="copy" />
+                    </div>
+                    <a href="/create-pass" class="btn">
+                        <img src="/images/users-white.svg" alt="Criar uma sala users-white"/>
+                        Criar Sala
+                    </a>
+                </div>
+            </header>
+
+            <main>
+                <section id="question-form">
+                    <h2>Faça sua pergunta</h2>
+                    <form action="/roomquestion/create/<%= roomid %>" method="POST">
+                        <label class="sr-only" for-id="question">O que você quer perguntar?</label>
+                        <textarea name="question" id="questions" placeholder="O que você quer perguntar?"></textarea>
+                        <footer>
+                            <div>
+                                <img src="/images/lock.svg" alt="Cadeado lock"/>
+                                Está pergunta é anônima.
+                            </div>
+                            <button>Enviar</button>
+                        </footer>
+                    </form>
+                </section>
+                <section id="ready-questions">
+                    <h2 class="sr-only">Perguntas da comunidade</h2>
+                    <div class="ready-questions-container">
+                        <% if(isNoQuestions){ %>
+                            <%- include('parts/empty-questions') %>
+                        <% } %> 
+
+                        <% questions.forEach(question => { %>       
+                            <div class="question-wrapper ">
+                                <div class="question-content">
+                                    <div class="user">
+                                        <img src="/images/user.svg" alt="Avatar"/> <!--Alterar depois o avatar somente para USer sozinho; obs: Em todas as ask-->
+                                    </div>
+                                    <div class="question-ask"> <!--Meio Redundante ksks-->
+                                        <p><%= question.title %></p>
+                                    </div>
+                                </div>
+                                <div class="actions">
+                                    <a href="#" class="check" data-id="<%= question.id%>">
+                                        <img src="/images/check.svg" alt="Marcar como lida"/>
+                                        Marcar como lida
+                                    </a>
+                                    <a href="#" class="delete" data-id="<%= question.id %>">
+                                        <img src="/images/trash.svg" alt="Excluir" />
+                                        Excluir
+                                    </a>
+                                </div>
+                            </div>
+                        <% }); %>
+                        
+                        <% questionsRead.forEach(questionRead => { %>
+                            <div class="question-wrapper read">
+                                <div class="question-content">
+                                    <div class="user">
+                                        <img src="/images/user.svg" alt="Avatar" />
+                                    </div>
+                                    <div class="question-ask"> <!--Meio Redundante ksks-->
+                                        <p><%= questionRead.title %> </p>
+                                    </div>
+                                </div>
+                                <div class="actions">
+                                    <a href="#" class="delete" data-id="<%= questionRead.id %>">
+                                        <img src="/images/trash.svg" alt="Excluir" />
+                                        Excluir
+                                    </a>
+                                </div>
+                            </div>
+                        <% }); %>
+                    </div>
+                </section>
+            </main>
+        </div>
+        <!-- <a href="#" class="check">
+            <img src="./images/check.svg" alt="Marcar como lida check"/> Não retirei, pois vou usar depois
+            Marcar como lida
+        </a> -->
+        
+        <!-- Modal -->
+        <div class="modal-wrapper">
+            <div class="modal">
+                <h2>Excluir Pergunta</h2>
+                <p>Tem certeza que você deseja excluir está pergunta?</p>
+                <form action="#" method="POST">
+                    <label class="sr-only" for-id="password">Digite sua senha de admin</label>
+                    <input type="password"  id="password" name="modalpass" placeholder="Digite sua senha"/>
+                    <div class="button-content">
+                        <div class="btn grey cancel">Cancelar</div>
+                        <button class="red">Sim, excluir</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>
