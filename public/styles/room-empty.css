@@ -1,0 +1,27 @@
+#no-question{
+    width: 27.7rem;
+    margin: 5.2rem auto;
+}
+#no-question .illustration{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#no-question .no-question-text{
+    text-align: center;
+    line-height: 1.9rem;
+}
+#no-question .no-question-text p:nth-child(1){
+    font-family: "Poppins", sans-serif;
+    font-size: 1.8rem;
+    margin-top: 1.2rem;
+    color: var(--black);
+    font-weight: 600;
+}
+#no-question .no-question-text p:nth-child(2){
+    font-size: 1.4rem;
+    font-family: "Open sans", sans-serif;
+    margin-top: 1.3rem;
+    color: var(--grey-dark);
+}
+
